@@ -1,0 +1,20 @@
+#include <iostream>
+
+// Function that takes an integer by value and adds 10 to it
+void addTen(int num) {
+    num += 10;
+    std::cout << "Inside addTen function: num = " << num << std::endl;
+}
+
+int main() {
+    int originalValue = 5;
+
+    std::cout << "Before calling addTen: originalValue = " << originalValue << std::endl;
+
+    // Call the addTen function
+    addTen(originalValue);
+
+    std::cout << "After calling addTen: originalValue = " << originalValue << std::endl;
+
+    return 0;
+}
