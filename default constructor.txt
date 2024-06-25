@@ -1,0 +1,94 @@
+1.
+
+#include <iostream>
+class Point{
+    public :
+    double x;
+    double y;
+};
+
+void offsetPoint(Point p , double x, double y){
+    p.x += x;
+    p.y += y;
+    std::cout<< "inside address of object"<<&p<<std::endl;
+}
+int main()
+{
+   Point p ;
+   p.x =3.0;
+   p.y = 4.0;
+   std::cout<< "outside address of oblect"<< &p<<std::endl;
+   offsetPoint(p,1.0,2.0 );
+   std::cout<< "outside address of object"<<&p<<std::endl;
+
+return 0;
+}
+
+2.
+
+#include <iostream>
+class Point{
+    public :
+    double x;
+    double y;
+    Point(){
+        x = 0.0;
+        y = 0.0;
+        std::cout<<"Constructor called"<<std::endl;
+    }
+};
+
+void offsetPoint(Point p , double x, double y){
+    p.x += x;
+    p.y += y;
+    std::cout<< "inside address of object"<<&p<<std::endl;
+}
+int main()
+{
+   Point p ;
+   std::cout<<"after constructor called"<<std::endl;
+   p.x =3.0;
+   p.y = 4.0;
+   std::cout<< "outside address of oblect"<< &p<<std::endl;
+   offsetPoint(p,1.0,2.0 );
+   std::cout<< "outside address of object"<<&p<<std::endl;
+
+return 0;
+}
+
+3.
+
+#include <iostream>
+class Point{
+public :
+    double x;
+    double y;
+    /*Point(){
+        x = 0.0;
+        y = 0.0;
+        std::cout<<"Constructor called"<<std::endl;
+    }*/
+    Point(double p, double q){
+        x = p;
+        y = q;
+        std::cout<< "_Pragma constructor called"<<std::endl ";
+    }
+};
+
+void offsetPoint(Point p , double x, double y){
+    p.x += x;
+    p.y += y;
+    std::cout<< "inside address of object"<<&p<<std::endl;
+}
+int main()
+{
+   Point p(13, 44);
+   std::cout<<"after constructor called"<<std::endl;
+   p.x =3.0;
+   p.y = 4.0;
+   std::cout<< "outside address of oblect"<< &p<<std::endl;
+   offsetPoint(p,1.0,2.0 );
+   std::cout<< "outside address of object"<<&p<<std::endl;
+
+return 0;
+}
