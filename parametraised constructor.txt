@@ -1,0 +1,26 @@
+#include <iostream>
+
+class Rectangle { // class name is Rectangle
+private:
+    double length; // double for length
+    double width; //double for width
+
+public:
+    // Parameterized constructor
+    Rectangle(double l, double w) : length(l), width(w) {}
+
+    // Method to calculate the area of the rectangle
+    double area() const {
+        return length * width;
+    }
+};
+
+int main() {
+    // Create an instance of Rectangle with length 5.0 and width 3.0
+    Rectangle rect(5.0, 3.0);
+
+    // Display the area of the rectangle
+    std::cout << "Area of the rectangle: " << rect.area() << std::endl;
+
+    return 0;
+}
