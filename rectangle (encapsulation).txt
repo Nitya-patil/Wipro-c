@@ -1,0 +1,38 @@
+#include <iostream>
+class Rectangle {
+private:
+    double length;
+    double width;
+    
+public:
+void setLength(double l){
+    length = l;
+}
+void setWidth(double w){
+    width = w;
+}
+double getLength() {
+    return length;
+}
+double getWidth() {
+    return width;
+}
+double calculateArea() {
+    return length * width;
+}
+};
+int main(){
+
+    Rectangle recta;
+    recta.setLength(2);
+    recta.setWidth(30);
+    double length = recta.getLength();
+    double width = recta.getWidth();
+    double area = recta.calculateArea();
+    std::cout << "Dimensions of the rectangel:\n";
+    std::cout << "Length: "<< length << " untis\n";
+    std::cout << "width: "<< width << " untis\n";
+    
+    
+}
+
