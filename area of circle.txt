@@ -1,0 +1,32 @@
+#include <iostream>
+#define PI 3.14159 //pi value
+
+class Circle { // class name circle
+private:
+    double radius; // double is used for radius
+
+public:
+    // Constructor to initialize the radius
+    Circle(double r) : radius(r) {}
+
+    // Method to calculate the area of the circle
+    double area() const {
+        return PI * radius * radius;
+    }
+};
+
+int main() {
+    // Create an object of Circle with radius 2
+    Circle circleInstance(2);
+
+    // Create a pointer to the Circle object
+    Circle* circlePointer = &circleInstance;
+
+    // Call the area method using the pointer
+    double areaOfCircle = circlePointer->area();
+
+    // Print the area of the circle
+    std::cout << "The area of the circle is: " << areaOfCircle << std::endl;
+
+    return 0;
+}
