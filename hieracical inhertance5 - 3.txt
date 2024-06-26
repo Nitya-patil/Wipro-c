@@ -1,0 +1,39 @@
+#include <iostream>
+using namespace std;
+
+// Superclass
+class Animal {
+public:
+    void eat() {
+        cout << "This animal is eating." << endl;
+    }
+};
+
+// Subclass 1
+class Dog : public Animal {
+public:
+    void bark() {
+        cout << "The dog barks." << endl;
+    }
+};
+
+// Subclass 2
+class Cat : public Animal {
+public:
+    void meow() {
+        cout << "The cat meows." << endl;
+    }
+};
+
+int main() {
+    Dog dog;
+    Cat cat;
+
+    dog.eat();   // Inherited from Animal
+    dog.bark();  // Specific to Dog
+
+    cat.eat();   // Inherited from Animal
+    cat.meow();  // Specific to Cat
+
+    return 0;
+}
