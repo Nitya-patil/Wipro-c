@@ -1,0 +1,127 @@
+Scenario:
+
+Imagine you're developing a university management system. You have a base class named Person that stores basic information about individuals associated with the university, such as:
+
+name (string)
+id (int)
+Question:
+
+Design a class hierarchy using inheritance to represent different types of people within the university. Consider the following categories:
+
+Student: Inherits from Person and has additional attributes like:
+major (string)
+gpa (double)
+A method calculateSemesterGPA(vector<double> grades) that takes a vector of grades (doubles) and calculates the semester GPA.
+Faculty: Inherits from Person and has additional attributes like:
+department (string)
+title (string) - e.g., "Professor", "Lecturer"
+A method teachCourse(string courseName) that simulates assigning a faculty member to teach a specific course.
+Additional Considerations:
+
+You can introduce further derived classes if you think of more specific roles within the university (e.g., Staff, Administrator).
+Think about access specifiers (public, private, protected) for member variables and methods in the base and derived classes.
+Consider virtual functions (especially in the context of polymorphism) if there's common functionality that might have different implementations in derived classes.
+Guiding Tips:
+
+Focus on code clarity and maintainability.
+Use meaningful variable and method names.
+Add comments to explain your design choices.
+Test your code to ensure it works as expected.
+
+#include <iostream>
+#include <vector>
+#include <numeric> // For std::accumulate
+using namespace std;
+
+// Base class: Person
+class Person {
+protected:
+    string name;
+    int id;
+
+public:
+    Person(string name, int id) : name(name), id(id) {}
+
+    void displayInfo() const {
+        cout << "Name: " << name << ", ID: " << id << endl;
+    }
+};
+
+// Derived class: Student
+class Student : public Person {
+private:
+    string major;
+    double gpa;
+
+public:
+    Student(string name, int id, string major, double gpa)
+        : Person(name, id), major(major), gpa(gpa) {}
+
+    void calculateSemesterGPA(vector<double> grades) {
+        if (grades.empty()) {
+            gpa = 0.0;
+            return;
+        }
+        double sum = accumulate(grades.begin(), grades.end(), 0.0);
+        gpa = sum / grades.size();
+    }
+
+    void displayStudentInfo() const {
+        displayInfo();
+        cout << "Major: " << major << ", GPA: " << gpa << endl;
+    }
+};
+
+// Derived class: Faculty
+class Faculty : public Person {
+private:
+    string department;
+    string title;
+
+public:
+    Faculty(string name, int id, string department, string title)
+        : Person(name, id), department(department), title(title) {}
+
+    void teachCourse(string courseName) const {
+        cout << name << " (" << title << ") is teaching " << courseName << " in the " << department << " department." << endl;
+    }
+
+    void displayFacultyInfo() const {
+        displayInfo();
+        cout << "Department: " << department << ", Title: " << title << endl;
+    }
+};
+
+// Further derived class: Administrator (example)
+class Administrator : public Person {
+private:
+    string role;
+
+public:
+    Administrator(string name, int id, string role)
+        : Person(name, id), role(role) {}
+
+    void displayAdminInfo() const {
+        displayInfo();
+        cout << "Role: " << role << endl;
+    }
+};
+
+int main() {
+    // Creating instances of Student, Faculty, and Administrator
+    Student s1("Arpitha", 101, "Computer Science", 3.8);
+    s1.displayStudentInfo();
+    
+    vector<double> grades = {3.5, 3.7, 4.0, 3.9};
+    s1.calculateSemesterGPA(grades);
+    s1.displayStudentInfo();
+    
+    Faculty f1("swapna", 201, "Mathematics", "Professor");
+    f1.displayFacultyInfo();
+    f1.teachCourse("Calculus I");
+    
+    Administrator a1("Nandini", 301, "Dean of Students");
+    a1.displayAdminInfo();
+
+    return 0;
+}
