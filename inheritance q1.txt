@@ -1,0 +1,72 @@
+1.Base Class (Person):
+
+Data members: name (string), age (int)
+Member functions: getDetails(), a virtual function to print basic person details
+Derived Class (Student): (Single Inheritance)
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Base Class
+class Person {
+protected:
+    string name;
+    int age;
+
+public:
+    // Constructor
+    Person(string n, int a) : name(n), age(a) {}
+
+    // Virtual function to print basic person details
+    virtual void getDetails() const {
+        cout << "Name: " << name << ", Age: " << age;
+    }
+};
+
+// Derived Class (Single Inheritance)
+class Student : public Person {
+private:
+    int studentId;
+    string major;
+
+public:
+    // Constructor
+    Student(string n, int a, int id, string m)
+        : Person(n, a), studentId(id), major(m) {}
+
+    // Setters
+    void setMajor(string m) {
+        major = m;
+    }
+
+    void setStudentId(int id) {
+        studentId = id;
+    }
+
+    // Getters
+    string getMajor() const {
+        return major;
+    }
+
+    int getStudentId() const {
+        return studentId;
+    }
+
+    // Override getDetails to include student-specific information
+    void getDetails() const override {
+        Person::getDetails();
+        cout << ", Student ID: " << studentId << ", Major: " << major << endl;
+    }
+};
+
+// Main function for testing
+int main() {
+    // Create a Student object
+    Student student("Alice", 20, 1001, "Computer Science");
+
+    // Call getDetails to print student details
+    student.getDetails();
+
+    return 0;
+}
