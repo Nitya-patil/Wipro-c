@@ -1,0 +1,92 @@
+3.Inherits from Person
+Data members: department (string), employeeId (int)
+Member functions:
+setDepartment(string) to set the faculty member's department
+getDepartment() to retrieve the department
+Override getDetails() to include faculty-specific information
+Derived Class (TeachingAssistant): (Multilevel Inheritance)
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+
+class Person {
+protected:
+    string name;
+    int age;
+
+public:
+    
+    Person(string n, int a) : name(n), age(a) {}
+
+    
+    virtual void getDetails() const {
+        cout << "Name: " << name << ", Age: " << age;
+    }
+};
+
+class Student : public Person {
+protected:
+    int studentId;
+    string major;
+
+public:
+  
+    Student(string n, int a, int id, string m)
+        : Person(n, a), studentId(id), major(m) {}
+
+    
+    void setMajor(string m) {
+        major = m;
+    }
+
+   
+    string getMajor() const {
+        return major;
+    }
+
+    
+    void getDetails() const override {
+        Person::getDetails();
+        cout << ", Student ID: " << studentId << ", Major: " << major;
+    }
+};
+
+class TeachingAssistant : public Student {
+private:
+    string department;
+    int employeeId;
+
+public:
+    
+    TeachingAssistant(string n, int a, int id, string m, string dep, int empId)
+        : Student(n, a, id, m), department(dep), employeeId(empId) {}
+
+  
+    void setDepartment(string dep) {
+        department = dep;
+    }
+
+ 
+    string getDepartment() const {
+        return department;
+    }
+
+    
+    void getDetails() const override {
+        Student::getDetails();
+        cout << ", Department: " << department << ", Employee ID: " << employeeId << endl;
+    }
+};
+
+
+int main() {
+    
+    TeachingAssistant ta("janavi", 25, 2019, "Computer Science", "Engineering", 2021);
+
+    cout << "Teaching Assistant Details:" << endl;
+    ta.getDetails();
+
+    return 0;
+}
