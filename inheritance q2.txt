@@ -1,0 +1,97 @@
+2.Inherits from Person
+Data members: studentId (int), major (string)
+Member functions:
+setMajor(string) to set the student's major
+getMajor() to retrieve the major
+Override getDetails() to include student-specific information
+Derived Class (Faculty): (Single Inheritance)
+
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Person {
+protected:
+    string name;
+    int age;
+
+public:
+  
+    Person(string n, int a) : name(n), age(a) {}
+    
+    virtual void getDetails() const {
+        cout << "Name: " << name << ", Age: " << age;
+    }
+};
+
+class Student : public Person {
+private:
+    int studentId;
+    string major;
+
+public:
+    
+    Student(string n, int a, int id, string m)
+        : Person(n, a), studentId(id), major(m) {}
+
+    void setMajor(string m) {
+        major = m;
+    }
+
+    string getMajor() const {
+        return major;
+    }
+
+    void getDetails() const override {
+        Person::getDetails();
+        cout << ", Student ID: " << studentId << ", Major: " << major << endl;
+    }
+};
+
+class Faculty : public Person {
+private:
+    string department;
+    int employeeId;
+
+public:
+
+    Faculty(string n, int a, string dep, int id)
+        : Person(n, a), department(dep), employeeId(id) {}
+
+    void setDepartment(string dep) {
+        department = dep;
+    }
+
+    void setEmployeeId(int id) {
+        employeeId = id;
+    }
+
+    string getDepartment() const {
+        return department;
+    }
+
+    int getEmployeeId() const {
+        return employeeId;
+    }
+
+    void getDetails() const override {
+        Person::getDetails();
+        cout << ", Department: " << department << ", Employee ID: " << employeeId << endl;
+    }
+};
+
+int main() {
+   
+    Student student("Nithya", 20, 1001, "Computer Science");
+
+    Faculty faculty("Nandi", 35, "Engineering", 2001);
+
+    cout << "Student Details:" << endl;
+    student.getDetails();
+
+    cout << "\nFaculty Details:" << endl;
+    faculty.getDetails();
+
+    return 0;
+}
