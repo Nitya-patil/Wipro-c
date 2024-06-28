@@ -1,0 +1,54 @@
+Design a base class Animal with a pure virtual function makeSound() that returns a string representing the animal's sound. Derive classes like Dog, Cat, and Bird from Animal, each overriding makeSound() with the appropriate sound ("Woof!", "Meow!", "Chirp!"). Create a function playAnimalSound(Animal* animal) that takes an Animal pointer and calls makeSound(). Populate an Animal* array with various animal objects and use playAnimalSound() to hear their sounds polymorphically.
+#include<iostream>
+using namespace std;
+
+class Animal{
+    public : 
+        virtual void makeSound(){
+            
+        }
+};
+class Dog : public Animal{
+    public : 
+        void makeSound(){
+            std::cout << "Woof!" << std::endl;
+        }
+};
+class Cat : public Animal{
+    public : 
+        void makeSound(){
+            std::cout << "Meow!" << std::endl;
+        }
+};
+class Bird : public Animal{
+    public : 
+        void makeSound(){
+            std::cout << "Chirp!" << std::endl;
+        }
+};
+void playAnimalSound(const Animal* animal) {
+    std::cout << animal->makeSound() << std::endl;
+}
+
+int main(){
+    Animal *animal;
+    Dog d ;
+   
+    
+    Cat c;
+    Bird b;
+    playAnimalSound(&d);
+    playAnimalSound(&c);
+    playAnimalSound(&b);
+
+ std::vector<const Animal*> animals;
+    animals.push_back(&d);
+    animals.push_back(&c);
+    animals.push_back(&b);
+
+    for (auto animal : animals) {
+        playAnimalSound(animal);
+    }
+   
+   
+}
