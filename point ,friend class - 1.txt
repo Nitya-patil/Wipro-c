@@ -1,0 +1,40 @@
+#include <iostream>
+
+// Forward declaration of friend class
+class PointOutputStream;
+
+class Point {
+private:
+    int x, y;
+
+public:
+    // Constructor to initialize x and y
+    Point(int xCoord, int yCoord) : x(xCoord), y(yCoord) {}
+
+    // Friend class declaration
+    friend class PointOutputStream;
+};
+
+// Friend class that overloads the << operator
+class PointOutputStream {
+public:
+    friend std::ostream& operator<<(std::ostream& os, const Point& point);
+};
+
+// Overloading the << operator to format and insert Point objects into output streams
+std::ostream& operator<<(std::ostream& os, const Point& point) {
+    os << "Point(" << point.x << ", " << point.y << ")";
+    return os;
+}
+
+int main() {
+    // Create Point objects
+    Point p1(3, 4);
+    Point p2(7, 8);
+
+    // Print Point objects using cout
+    std::cout << p1 << std::endl;
+    std::cout << p2 << std::endl;
+
+    return 0;
+}
