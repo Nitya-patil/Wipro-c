@@ -1,0 +1,46 @@
+Question 4: Virtual Destructor and Slicing
+
+Create a base class Shape with a member variable color and a virtual destructor.
+Derive a class Circle from Shape that adds a member variable radius.
+In main, create a Circle object on the stack and assign it to a Shape reference. Then, delete the reference.
+Explain why this leads to object slicing (the radius member is not deleted) and the importance of virtual destructors in preventing it. Discuss how virtual destructors ensure the complete destruction of derived class objects when accessed through base class pointers or references.
+
+#include <iostream>
+using namespace std;
+
+// Base class Shape with a member variable color and a virtual destructor
+class Shape {
+public:
+    string color;
+    Shape(const string& c) : color(c) {}
+    virtual ~Shape() {
+        cout << "Shape destructor called" << endl;
+    }
+};
+
+// Derived class Circle from Shape that adds a member variable radius
+class Circle : public Shape {
+public:
+    double radius;
+    Circle(const string& c, double r) : Shape(c), radius(r) {}
+    ~Circle() {
+        cout << "Circle destructor called" << endl;
+    }
+};
+
+int main() {
+    // Create a Circle object on the stack
+    Circle circle("red", 5.0);
+    
+    // Assign it to a Shape reference
+    Shape& shapeRef = circle;
+
+    // Deleting the reference would be incorrect here as it is on the stack
+    // delete &shapeRef; // Uncommenting this line would lead to undefined behavior
+
+    // But, let's demonstrate object slicing and why virtual destructors are important
+    Shape* shapePtr = new Circle("blue", 10.0);
+    delete shapePtr; // Correct way to delete dynamically allocated object
+
+    return 0;
+}
