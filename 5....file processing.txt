@@ -1,0 +1,59 @@
+File Processing: Design a base class File with a virtual function readData() that has an empty body. Create derived classes like TextFile and ImageFile inheriting from File and overriding readData() with their specific reading procedures. Implement a function that takes a pointer to File as input, attempts to read the data using the readData() function, and handles potential errors based on the actual derived class type (e.g., different file formats
+
+#include <iostream>
+#include <string>
+#include <stdexcept>
+
+class File {
+public:
+    virtual ~File() = default;
+    virtual void readData() const = 0;
+};
+
+class TextFile : public File {
+    std::string filename;
+public:
+    TextFile(const std::string& file) : filename(file) {}
+    void readData() const override {
+        if (filename.empty()) throw std::runtime_error("Text file is empty or invalid.");
+        std::cout << "Reading data from text file: " << filename << std::endl;
+    }
+};
+
+class ImageFile : public File {
+    std::string filename;
+public:
+    ImageFile(const std::string& file) : filename(file) {}
+    void readData() const override {
+        if (filename.empty()) throw std::runtime_error("Image file is empty or invalid.");
+        std::cout << "Reading data from image file: " << filename << std::endl;
+    }
+};
+
+void processFile(const File* file) {
+    try {
+        file->readData();
+    } catch (const std::exception& e) {
+        if (dynamic_cast<const TextFile*>(file)) {
+            std::cout << "Error reading text file: " << e.what() << std::endl;
+        } else if (dynamic_cast<const ImageFile*>(file)) {
+            std::cout << "Error reading image file: " << e.what() << std::endl;
+        } else {
+            std::cerr << "Error reading file: " << e.what() << std::endl;
+        }
+    }
+}
+
+int main() {
+    TextFile txtFile("example.txt");
+    ImageFile imgFile("example.png");
+    TextFile emptyTxtFile("");
+    ImageFile emptyImgFile("");
+
+    processFile(&txtFile);
+    processFile(&imgFile);
+    processFile(&emptyTxtFile);
+    processFile(&emptyImgFile);
+
+    return 0;
+}
