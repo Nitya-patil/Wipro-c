@@ -1,0 +1,73 @@
+Design an abstract factory class hierarchy to create different families of products (e.g., furniture). Use pointers and runtime polymorphism. Define an abstract base class FurnitureFactory with a virtual function createChair(). Create derived classes like ModernFurnitureFactory and ClassicFurnitureFactory that override createChair() to return pointers to concrete chair objects specific to their style. Utilize the factory pattern with runtime polymorphism to allow for flexible furniture creation based on user choice
+
+
+#include <iostream>
+#include <memory>
+
+// Abstract Product Class
+class Chair {
+public:
+    virtual void sitOn() const = 0;
+    virtual ~Chair() = default;
+};
+
+// Concrete Product Classes
+class ModernChair : public Chair {
+public:
+    void sitOn() const override {
+        std::cout << "Sitting on a modern chair." << std::endl;
+    }
+};
+
+class ClassicChair : public Chair {
+public:
+    void sitOn() const override {
+        std::cout << "Sitting on a classic chair." << std::endl;
+    }
+};
+
+// Abstract Factory Class
+class FurnitureFactory {
+public:
+    virtual Chair* createChair() const = 0;
+    virtual ~FurnitureFactory() = default;
+};
+
+// Concrete Factory Classes
+class ModernFurnitureFactory : public FurnitureFactory {
+public:
+    Chair* createChair() const override {
+        return new ModernChair();
+    }
+};
+
+class ClassicFurnitureFactory : public FurnitureFactory {
+public:
+    Chair* createChair() const override {
+        return new ClassicChair();
+    }
+};
+
+// Client Code
+int main() {
+    std::unique_ptr<FurnitureFactory> factory;
+    char choice;
+    std::cout << "Choose furniture style (m: Modern, c: Classic): ";
+    std::cin >> choice;
+
+    if (choice == 'm') {
+        factory = std::unique_ptr<FurnitureFactory>(new ModernFurnitureFactory());
+    } else if (choice == 'c') {
+        factory = std::unique_ptr<FurnitureFactory>(new ClassicFurnitureFactory());
+    } else {
+        std::cerr << "Invalid choice!" << std::endl;
+        return 1;
+    }
+
+    Chair* chair = factory->createChair();
+    chair->sitOn();
+
+    delete chair;  // Don't forget to delete the created chair to avoid memory leaks.
+
+    return 0;
+}
