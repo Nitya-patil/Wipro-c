@@ -1,0 +1,16 @@
+#include<iostream>
+
+int multiply(int a, int b);
+int main()
+{
+    //normal function
+    std::cout<< multiply(4, 5) <<std::endl;
+    
+    /lamda expression
+    std::cout<<[] (int a, int b){return a*b;}(4, 5)<<std::endl;
+    auto f =[] (int a, int b){return a*b; };
+    std::cout<< f(4, 5) <<std::endl;
+}
+int multiply(int a,int b){
+    return a*b;
+}
