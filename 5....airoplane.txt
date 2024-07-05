@@ -1,0 +1,139 @@
+Data Structures:
+
+Create a C++ structure named Flight to represent flight information, including:
+Flight number (string)
+Departure and arrival airports (strings)
+Departure and arrival date/time (strings or appropriate data types)
+Number of available seats (integer)
+Price per seat (float)
+Consider creating another structure named Passenger (optional) to store passenger details if needed (name, passport information etc.).
+Functions:
+
+Develop C++ functions to:
+Display a list of available flights based on user-specified origin and destination airports (consider searching by date range as well).
+Book a specific number of seats for a chosen flight (handle cases where insufficient seats are available).
+Cancel a booking for a specific flight and number of seats (ensure the user cancels the correct booking).
+Display a list of all booked flights for a specific user (if using Passenger structure).
+Implement error handling for invalid user input (e.g., trying to book negative seats).
+Include a function to add new flights to the system (consider adding flights dynamically if needed).
+
+#include <iostream>
+#include <vector>
+#include <string>
+#include <unordered_map>
+#include <iomanip>
+
+struct Flight {
+    std::string flightNumber;
+    std::string departureAirport;
+    std::string arrivalAirport;
+    std::string departureDateTime;
+    std::string arrivalDateTime;
+    int availableSeats;
+    float pricePerSeat;
+};
+
+struct Passenger {
+    std::string name;
+    std::string passportNumber;
+    std::unordered_map<std::string, int> bookedFlights; // flightNumber -> number of seats booked
+};
+
+class FlightSystem {
+private:
+    std::vector<Flight> flights;
+    std::unordered_map<std::string, Passenger> passengers;
+
+public:
+    void addFlight(const Flight& flight) {
+        flights.push_back(flight);
+    }
+
+    void displayAvailableFlights(const std::string& origin, const std::string& destination, const std::string& startDate, const std::string& endDate) {
+        std::cout << "Available flights from " << origin << " to " << destination << " between " << startDate << " and " << endDate << ":\n";
+        for (const auto& flight : flights) {
+            if (flight.departureAirport == origin && flight.arrivalAirport == destination) {
+                std::cout << "Flight Number: " << flight.flightNumber << "\n";
+                std::cout << "Departure: " << flight.departureDateTime << "\n";
+                std::cout << "Arrival: " << flight.arrivalDateTime << "\n";
+                std::cout << "Available Seats: " << flight.availableSeats << "\n";
+                std::cout << "Price per Seat: $" << std::fixed << std::setprecision(2) << flight.pricePerSeat << "\n";
+                std::cout << "-----------------------------------\n";
+            }
+        }
+    }
+
+    void bookSeats(const std::string& passengerName, const std::string& passportNumber, const std::string& flightNumber, int seats) {
+        for (auto& flight : flights) {
+            if (flight.flightNumber == flightNumber) {
+                if (flight.availableSeats >= seats) {
+                    flight.availableSeats -= seats;
+                    passengers[passportNumber].name = passengerName;
+                    passengers[passportNumber].passportNumber = passportNumber;
+                    passengers[passportNumber].bookedFlights[flightNumber] += seats;
+                    std::cout << "Booking successful. " << seats << " seats booked on flight " << flightNumber << ".\n";
+                } else {
+                    std::cout << "Insufficient seats available.\n";
+                }
+                return;
+            }
+        }
+        std::cout << "Flight not found.\n";
+    }
+
+    void cancelBooking(const std::string& passportNumber, const std::string& flightNumber, int seats) {
+        if (passengers.find(passportNumber) != passengers.end() && passengers[passportNumber].bookedFlights.find(flightNumber) != passengers[passportNumber].bookedFlights.end()) {
+            if (passengers[passportNumber].bookedFlights[flightNumber] >= seats) {
+                passengers[passportNumber].bookedFlights[flightNumber] -= seats;
+                if (passengers[passportNumber].bookedFlights[flightNumber] == 0) {
+                    passengers[passportNumber].bookedFlights.erase(flightNumber);
+                }
+                for (auto& flight : flights) {
+                    if (flight.flightNumber == flightNumber) {
+                        flight.availableSeats += seats;
+                        std::cout << "Booking cancelled. " << seats << " seats cancelled on flight " << flightNumber << ".\n";
+                        return;
+                    }
+                }
+            } else {
+                std::cout << "You do not have that many seats booked.\n";
+            }
+        } else {
+            std::cout << "Booking not found.\n";
+        }
+    }
+
+    void displayBookedFlights(const std::string& passportNumber) {
+        if (passengers.find(passportNumber) != passengers.end()) {
+            std::cout << "Flights booked for passenger " << passengers[passportNumber].name << ":\n";
+            for (const auto& booking : passengers[passportNumber].bookedFlights) {
+                std::cout << "Flight Number: " << booking.first << " - Seats: " << booking.second << "\n";
+            }
+        } else {
+            std::cout << "No bookings found for this passenger.\n";
+        }
+    }
+};
+
+int main() {
+    FlightSystem system;
+
+    // Add sample flights
+    system.addFlight({"FL123", "JFK", "LAX", "2024-07-05 08:00", "2024-07-05 11:00", 100, 300.00});
+    system.addFlight({"FL124", "JFK", "LAX", "2024-07-06 09:00", "2024-07-06 12:00", 50, 350.00});
+    system.addFlight({"FL125", "JFK", "SFO", "2024-07-07 10:00", "2024-07-07 13:00", 75, 400.00});
+
+    // Display available flights
+    system.displayAvailableFlights("JFK", "LAX", "2024-07-04", "2024-07-08");
+
+    // Book seats
+    system.bookSeats("John Doe", "P123456", "FL123", 2);
+
+    // Cancel booking
+    system.cancelBooking("P123456", "FL123", 1);
+
+    // Display booked flights
+    system.displayBookedFlights("P123456");
+
+    return 0;
+}
