@@ -1,0 +1,56 @@
+Practice Problem Statement:
+
+Scenario: You're working on a data analysis project where you need to filter a list of integers based on whether they are even or odd. You want to use a lambda expression to achieve this filtering.
+
+Task:
+
+Define a function named filter_even_odds that takes two arguments:
+const std::vector<int>& numbers: The vector containing the integer values.
+bool is_even: A flag indicating whether to filter even (true) or odd (false) numbers.
+Inside the function, use a lambda expression to iterate through the numbers vector.
+Within the lambda, check if the current number is even using the modulo operator (%).
+If the even/odd condition matches the is_even flag, add the number to a new filtered vector.
+Return the filtered vector from the filter_even_odds function.
+
+
+#include <iostream>
+#include <vector>
+
+std::vector<int> filter_even_odds(const std::vector<int>& numbers, bool is_even) {
+    std::vector<int> filtered_numbers;
+    
+    // Lambda to filter numbers
+    auto filter = [is_even](int number) {
+        return is_even ? (number % 2 == 0) : (number % 2 != 0);
+    };
+    
+    for (const auto& number : numbers) {
+        if (filter(number)) {
+            filtered_numbers.push_back(number);
+        }
+    }
+    
+    return filtered_numbers;
+}
+
+int main() {
+    std::vector<int> numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    
+    // Filter even numbers
+    std::vector<int> even_numbers = filter_even_odds(numbers, true);
+    std::cout << "Even numbers: ";
+    for (const auto& num : even_numbers) {
+        std::cout << num << " ";
+    }
+    std::cout << std::endl;
+    
+    // Filter odd numbers
+    std::vector<int> odd_numbers = filter_even_odds(numbers, false);
+    std::cout << "Odd numbers: ";
+    for (const auto& num : odd_numbers) {
+        std::cout << num << " ";
+    }
+    std::cout << std::endl;
+
+    return 0;
+}
