@@ -1,0 +1,19 @@
+Casting References - Same Type: Declare an int variable x and an int reference refX assigned to x. Cast refX to a float reference refF. What happens in this case?
+
+#include <iostream>
+
+int main() {
+ 
+    int x = 42;
+
+    int& refX = x;
+
+    float& refF = reinterpret_cast<float&>(refX);
+
+    // Print the values
+    std::cout << "Value of x: " << x << std::endl;
+    std::cout << "Value of refX: " << refX << std::endl;
+    std::cout << "Value of refF: " << refF << std::endl;
+
+    return 0;
+}
