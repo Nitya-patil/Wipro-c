@@ -1,0 +1,16 @@
+Casting References - Different Types: Declare an int variable x and a float variable f. Initialize an int reference refX with x. Can you cast refX to refer to f? Why or why not?
+
+#include<iostream>
+using namespace std;
+
+
+int main(){
+   int x = 10;
+   float f = 10.1;
+   
+  int &int_ref = x;
+   
+   std::cout << "x value is : " << x << std::endl;
+   
+   std::cout << "f value is : " << f << std::endl;
+}
