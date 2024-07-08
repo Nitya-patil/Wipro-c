@@ -1,0 +1,15 @@
+#include<iostream>
+using namespace std;
+
+int main(){
+    double x = 21.0342;
+    float y = 10.9;
+    
+    int z;
+    
+    z = (int) x;
+    std::cout << "now the x type is (int)" << z << std::endl;
+    
+    z = (int) y;
+    std::cout << "now the y type is (int)" << z<< std::endl;
+}
