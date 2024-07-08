@@ -1,0 +1,21 @@
+Challenge: Temperature Conversion (Casting and Rounding): Create a program that takes a temperature in Celsius as input from the user. Use explicit casting and appropriate rounding techniques to convert it to Fahrenheit and print the result.
+
+
+
+#include<iostream>
+#include<cmath>
+using namespace std;
+
+int main(){
+    double celcius ;
+    
+    std::cout << "enter the value : " << std::endl;
+    std::cin >> celcius;
+    
+    double Fahrenheit = static_cast<double>(9)/5 * celcius + 32; // Fahrenheit formula 9/5 * C + 32
+    
+    
+    int RFahrenheit = static_cast<int>(std::round(Fahrenheit));
+    
+    std::cout << "temperatur is : " << RFahrenheit << std::endl;
+}
