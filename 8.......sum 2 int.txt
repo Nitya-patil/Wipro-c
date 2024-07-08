@@ -1,0 +1,18 @@
+Basic Lambda: Define a lambda expression that takes two integers as arguments and returns their sum. Use auto to infer the return type.
+
+#include<iostream>
+
+using namespace std;
+
+int main(){
+    
+    auto sum = [](int x, int y){return x + y;};
+    
+    int x = 5;
+    int y = 6;
+    int res = sum(x,y);
+    
+    std::cout << "Sum of " << x << " and " << y << " is : " << res << std::endl;
+    
+    
+}
