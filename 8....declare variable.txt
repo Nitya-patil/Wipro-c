@@ -1,0 +1,12 @@
+Implicit Casting: Write a program that declares an int variable a with the value 10 and a float variable b with the value 3.14. Then, perform the division a / b and print the result. Explain how implicit casting works in this scenario
+
+#include<iostream>
+using namespace std;
+
+int main(){
+    int value = 10;
+    
+    float float_ptr = reinterpret_cast<float>(&value);
+    
+    std::cout << *float_ptr << std::endl;
+}
