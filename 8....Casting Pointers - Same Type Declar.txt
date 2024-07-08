@@ -1,0 +1,18 @@
+Casting Pointers - Same Type: Declare an int variable num and an int pointer ptr initialized with the address of num. Cast ptr to a float pointer fPtr using explicit casting. Is this casting safe? Why or why not?
+
+
+#include <iostream>
+
+int main() {
+  
+    int num = 42;
+
+    int* ptr = &num;
+
+    float* fPtr = reinterpret_cast<float*>(ptr);
+
+    std::cout << "Value of num: " << num << std::endl;
+    std::cout << "Value pointed to by fPtr: " << *fPtr << std::endl;
+
+    return 0;
+}
