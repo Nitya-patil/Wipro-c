@@ -1,0 +1,18 @@
+Challenge: Pointer Arithmetic with Casting (Safe vs. Unsafe): Demonstrate safe and unsafe pointer arithmetic with casting. Explain the potential consequences of unsafe pointer manipulation.
+
+
+#include <iostream>
+
+int main() {
+
+    int arr[5] = {1, 2, 3, 4, 5};
+
+    int* intPtr = arr;
+
+    std::cout << "Safe Pointer Arithmetic:" << std::endl;
+    for (int i = 0; i < 5; ++i) {
+        std::cout << "Element " << i << ": " << *(intPtr + i) << std::endl;
+    }
+
+    return 0;
+}
