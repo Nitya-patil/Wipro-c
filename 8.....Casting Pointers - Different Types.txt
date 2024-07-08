@@ -1,0 +1,22 @@
+Casting Pointers - Different Types: Declare an int variable num and a float variable fval. Initialize an int pointer intPtr with the address of num and a float pointer floatPtr with the address of fval. Can you safely cast intPtr to floatPtr? Explain.
+
+
+#include <iostream>
+
+int main() {
+
+    int num = 42;
+
+    float fval = 3.14;
+    int* intPtr = &num;
+
+    float* floatPtr = &fval;
+
+    float* castedFloatPtr = reinterpret_cast<float*>(intPtr);
+
+    std::cout << "Value of num: " << num << std::endl;
+    std::cout << "Value of fval: " << fval << std::endl;
+    std::cout << "Value pointed to by castedFloatPtr: " << *castedFloatPtr << std::endl;
+
+    return 0;
+}
