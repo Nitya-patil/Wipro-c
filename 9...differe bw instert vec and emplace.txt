@@ -1,0 +1,19 @@
+#include <iostream>
+#include <vector>
+
+int main() {
+    std::vector<int> vec1 = {100, 200, 300, 500};
+
+    // Insert 300 at the second position (index 1)
+    vec1.insert(vec1.begin() + 2, 300);
+
+    // Emplace 400 at the beginning of the vector
+    vec1.emplace(vec1.begin(), 400);
+
+    // Print the elements of vec1
+    for (int value : vec1) {
+        std::cout << value << " ";
+    }
+
+    return 0;
+}
