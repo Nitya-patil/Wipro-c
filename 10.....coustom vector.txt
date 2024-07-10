@@ -1,0 +1,77 @@
+#include <iostream>
+#include <vector>
+
+class CustomVector {
+private:
+    double* elements; // Pointer to array of elements
+    size_t capacity;  // Capacity of the vector (current allocated size)
+    size_t size_;     // Number of elements currently in the vector
+
+public:
+    // Constructor
+    CustomVector() : elements(nullptr), capacity(0), size_(0) {}
+
+    // Destructor
+    ~CustomVector() {
+        delete[] elements;
+    }
+
+    // Function to get the size of the vector
+    size_t size() const {
+        return size_;
+    }
+
+    // Function to add an element to the vector
+    void push_back(double value) {
+        if (size_ >= capacity) {
+            // If capacity is not enough, increase capacity
+            capacity = (capacity == 0) ? 1 : capacity * 2;
+            double* newElements = new double[capacity];
+            // Copy existing elements to new array
+            for (size_t i = 0; i < size_; ++i) {
+                newElements[i] = elements[i];
+            }
+            // Delete old array and assign new array to elements
+            delete[] elements;
+            elements = newElements;
+        }
+        // Add value to vector and increase size
+        elements[size_] = value;
+        ++size_;
+    }
+
+    // Function to get element at index
+    double at(size_t index) const {
+        if (index >= size_) {
+            throw std::out_of_range("Index out of range");
+        }
+        return elements[index];
+    }
+
+    // Function to print elements of the vector
+    void print() const {
+        std::cout << "CustomVector(";
+        for (size_t i = 0; i < size_; ++i) {
+            std::cout << elements[i];
+            if (i < size_ - 1) {
+                std::cout << ", ";
+            }
+        }
+        std::cout << ")" << std::endl;
+    }
+};
+
+int main() {
+    CustomVector v;
+
+    v.push_back(1.0);
+    v.push_back(2.0);
+    v.push_back(3.0);
+
+    std::cout << "Size of vector: " << v.size() << std::endl;
+    std::cout << "Element at index 1: " << v.at(1) << std::endl;
+
+    v.print();
+
+return 0;
+}
