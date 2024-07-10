@@ -1,0 +1,77 @@
+Maximum Element in Stack
+Description:
+Design a stack that supports push, pop, and retrieving the maximum element in constant time.
+
+#include <iostream>
+#include <stack>
+#include <stdexcept>
+
+class MaxStack {
+private:
+    std::stack<int> mainStack;
+    std::stack<int> maxStack;
+
+public:
+    // Push element onto the stack
+    void push(int x) {
+        mainStack.push(x);
+        if (maxStack.empty() || x >= maxStack.top()) {
+            maxStack.push(x);
+        }
+    }
+
+    // Remove the element on top of the stack
+    void pop() {
+        if (mainStack.empty()) {
+            throw std::out_of_range("Stack is empty");
+        }
+        if (mainStack.top() == maxStack.top()) {
+            maxStack.pop();
+        }
+        mainStack.pop();
+    }
+
+    // Get the top element
+    int top() {
+        if (mainStack.empty()) {
+            throw std::out_of_range("Stack is empty");
+        }
+        return mainStack.top();
+    }
+
+    // Retrieve the maximum element in the stack
+    int getMax() {
+        if (maxStack.empty()) {
+            throw std::out_of_range("Stack is empty");
+        }
+        return maxStack.top();
+    }
+
+    // Check if the stack is empty
+    bool empty() const {
+        return mainStack.empty();
+    }
+};
+
+int main() {
+    MaxStack stack;
+
+    stack.push(3);
+    stack.push(5);
+    std::cout << "Current max: " << stack.getMax() << std::endl; // Output: 5
+
+    stack.push(2);
+    stack.push(6);
+    std::cout << "Current max: " << stack.getMax() << std::endl; // Output: 5
+
+    stack.pop();
+    std::cout << "Current max: " << stack.getMax() << std::endl; // Output: 5
+
+    stack.pop();
+    std::cout << "Current max: " << stack.getMax() << std::endl; // Output: 5
+
+    stack.push(6);
+    std::cout << "Current max: " << stack.getMax() << std::endl; // Output: 6
+
+    return 0;
+}
