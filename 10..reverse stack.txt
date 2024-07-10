@@ -1,0 +1,46 @@
+#include <iostream>
+#include <queue>
+#include <stack>
+
+void reverseQueue(std::queue<int>& q) {
+    std::stack<int> s;
+
+    // Step 1: Dequeue all elements from the queue and push them onto the stack
+    while (!q.empty()) {
+        s.push(q.front());
+        q.pop();
+    }
+
+    // Step 2: Pop all elements from the stack and enqueue them back to the queue
+    while (!s.empty()) {
+        q.push(s.top());
+        s.pop();
+    }
+}
+
+void printQueue(std::queue<int> q) {
+    while (!q.empty()) {
+        std::cout << q.front() << " ";
+        q.pop();
+    }
+    std::cout << std::endl;
+}
+
+int main() {
+    std::queue<int> q;
+    q.push(1);
+    q.push(2);
+    q.push(3);
+    q.push(4);
+    q.push(5);
+
+    std::cout << "Original queue: ";
+    printQueue(q);
+
+    reverseQueue(q);
+
+    std::cout << "Reversed queue: ";
+    printQueue(q);
+
+    return 0;
+}
