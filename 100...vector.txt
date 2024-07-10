@@ -1,0 +1,57 @@
+#include <iostream>
+
+class Vector {
+private:
+    double components[3];
+
+public:
+    // Constructor to initialize the vector with components
+    Vector(double x, double y, double z) {
+        components[0] = x;
+        components[1] = y;
+        components[2] = z;
+    }
+
+    // Function to add two vectors
+    Vector add(const Vector& other) const {
+        return Vector(
+            components[0] + other.components[0],
+            components[1] + other.components[1],
+            components[2] + other.components[2]
+        );
+    }
+
+    // Function to multiply vector by a scalar
+    Vector multiply(double scalar) const {
+        return Vector(
+            components[0] * scalar,
+            components[1] * scalar,
+            components[2] * scalar
+        );
+    }
+
+    // Function to print the vector
+    void print() const {
+        std::cout << "Vector(" 
+                  << components[0] << ", " 
+                  << components[1] << ", " 
+                  << components[2] << ")" << std::endl;
+    }
+};
+
+int main() {
+    // Create two vector objects
+    Vector v1(1.0, 2.0, 3.0);
+    Vector v2(4.0, 5.0, 6.0);
+
+    // Add the vectors
+    Vector v3 = v1.add(v2);
+    // Multiply the first vector by 2
+    Vector v4 = v1.multiply(2.0);
+
+    // Print the results
+    v3.print(); // Output: Vector(5.0, 7.0, 9.0)
+    v4.print(); // Output: Vector(2.0, 4.0, 6.0)
+
+    return 0;
+}
