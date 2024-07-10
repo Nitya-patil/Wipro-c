@@ -1,0 +1,61 @@
+Sort a Stack
+Description:
+Write a function to sort a stack such that the smallest items are on the top.
+
+#include <iostream>
+#include <stack>
+
+// Function to sort the stack
+void sortStack(std::stack<int>& inputStack) {
+    std::stack<int> tempStack;
+
+    while (!inputStack.empty()) {
+        int temp = inputStack.top();
+        inputStack.pop();
+
+        // While the auxiliary stack is not empty and the top element
+        // of the auxiliary stack is greater than temp
+        while (!tempStack.empty() && tempStack.top() > temp) {
+            inputStack.push(tempStack.top());
+            tempStack.pop();
+        }
+
+        // Push the current element into the auxiliary stack
+        tempStack.push(temp);
+    }
+
+    // Transfer the elements back to the input stack
+    while (!tempStack.empty()) {
+        inputStack.push(tempStack.top());
+        tempStack.pop();
+    }
+}
+
+// Function to print the elements of the stack
+void printStack(std::stack<int> s) {
+    while (!s.empty()) {
+        std::cout << s.top() << " ";
+        s.pop();
+    }
+    std::cout << std::endl;
+}
+
+int main() {
+    std::stack<int> inputStack;
+    inputStack.push(34);
+    inputStack.push(3);
+    inputStack.push(31);
+    inputStack.push(98);
+    inputStack.push(92);
+    inputStack.push(23);
+
+    std::cout << "Original Stack: ";
+    printStack(inputStack);
+
+    sortStack(inputStack);
+
+    std::cout << "Sorted Stack: ";
+    printStack(inputStack);
+
+    return 0;
+}
