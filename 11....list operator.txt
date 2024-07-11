@@ -1,0 +1,62 @@
+Problem 1: List Operations
+Description:
+Write a program that uses the std::list container to manage a collection of integers. Your program should perform the following operations:
+
+Insert elements at the front and back of the list.
+Remove elements from the front and back of the list.
+Sort the list in ascending and descending order.
+Reverse the list.
+Display the elements of the list.
+
+
+#include <iostream>
+#include <list>
+#include <algorithm> // for std::sort
+
+// Function to display the elements of the list
+void display(const std::list<int>& lst) {
+    for (int elem : lst) {
+        std::cout << elem << " ";
+    }
+    std::cout << std::endl;
+}
+
+int main() {
+    std::list<int> myList;
+
+    // Insert elements at the front and back
+    myList.push_front(5);
+    myList.push_front(3);
+    myList.push_back(8);
+    myList.push_back(1);
+
+    std::cout << "List after inserting elements at the front and back: ";
+    display(myList);
+
+    // Remove elements from the front and back
+    myList.pop_front();
+    myList.pop_back();
+
+    std::cout << "List after removing elements from the front and back: ";
+    display(myList);
+
+    // Sort the list in ascending order
+    myList.sort();
+
+    std::cout << "List after sorting in ascending order: ";
+    display(myList);
+
+    // Sort the list in descending order
+    myList.sort(std::greater<int>());
+
+    std::cout << "List after sorting in descending order: ";
+    display(myList);
+
+    // Reverse the list
+    myList.reverse();
+
+    std::cout << "List after reversing: ";
+    display(myList);
+
+    return 0;
+}
