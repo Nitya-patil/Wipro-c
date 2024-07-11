@@ -1,0 +1,65 @@
+Problem 4: Stack Operations
+Description:
+Write a program using the std::stack container to evaluate a postfix expression. The program should:
+
+Read a postfix expression.
+Use a stack to evaluate the expression.
+Display the result of the evaluation.
+
+#include <iostream>
+#include <stack>
+#include <sstream>
+#include <string>
+#include <cctype>
+
+// Function to evaluate a postfix expression
+double evaluatePostfix(const std::string& expression) {
+    std::stack<double> stack;
+    std::istringstream iss(expression);
+    std::string token;
+
+    while (iss >> token) {
+        if (std::isdigit(token[0])) {
+            // If the token is a number, push it to the stack
+            stack.push(std::stod(token));
+        } else {
+            // Otherwise, the token is an operator; pop two elements from the stack
+            double operand2 = stack.top();
+            stack.pop();
+            double operand1 = stack.top();
+            stack.pop();
+
+            // Perform the operation and push the result back to the stack
+            if (token == "+") {
+                stack.push(operand1 + operand2);
+            } else if (token == "-") {
+                stack.push(operand1 - operand2);
+            } else if (token == "*") {
+                stack.push(operand1 * operand2);
+            } else if (token == "/") {
+                stack.push(operand1 / operand2);
+            } else {
+                throw std::invalid_argument("Invalid operator in expression");
+            }
+        }
+    }
+
+    // The result of the expression is the only element left in the stack
+    return stack.top();
+}
+
+int main() {
+    std::string expression;
+    
+    std::cout << "Enter a postfix expression (e.g., '3 4 + 2 * 7 /'): ";
+    std::getline(std::cin, expression);
+
+    try {
+        double result = evaluatePostfix(expression);
+        std::cout << "The result of the postfix expression is: " << result << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "Error evaluating expression: " << e.what() << std::endl;
+    }
+
+    return 0;
+}
