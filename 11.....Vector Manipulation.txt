@@ -1,0 +1,74 @@
+Problem 2: Vector Manipulation
+Description:
+Create a program that uses the std::vector container to store a collection of floating-point numbers. The program should:
+
+Add elements to the vector.
+Remove elements from a specified position.
+Find the maximum and minimum elements in the vector.
+Calculate the average of the elements.
+Display the elements of the vector.
+
+#include <iostream>
+#include <vector>
+#include <algorithm> // for std::max_element, std::min_element
+#include <numeric>   // for std::accumulate
+
+// Function to display the elements of the vector
+void display(const std::vector<float>& vec) {
+    for (float elem : vec) {
+        std::cout << elem << " ";
+    }
+    std::cout << std::endl;
+}
+
+// Function to find the maximum element in the vector
+float findMax(const std::vector<float>& vec) {
+    return *std::max_element(vec.begin(), vec.end());
+}
+
+// Function to find the minimum element in the vector
+float findMin(const std::vector<float>& vec) {
+    return *std::min_element(vec.begin(), vec.end());
+}
+
+// Function to calculate the average of the elements in the vector
+float calculateAverage(const std::vector<float>& vec) {
+    float sum = std::accumulate(vec.begin(), vec.end(), 0.0);
+    return sum / vec.size();
+}
+
+int main() {
+    std::vector<float> myVector;
+
+    // Add elements to the vector
+    myVector.push_back(5.5);
+    myVector.push_back(3.2);
+    myVector.push_back(8.1);
+    myVector.push_back(1.4);
+
+    std::cout << "Vector after adding elements: ";
+    display(myVector);
+
+    // Remove element from a specified position (e.g., position 2)
+    int pos = 2;
+    if (pos >= 0 && pos < myVector.size()) {
+        myVector.erase(myVector.begin() + pos);
+    }
+
+    std::cout << "Vector after removing element at position " << pos << ": ";
+    display(myVector);
+
+    // Find the maximum and minimum elements in the vector
+    float maxElem = findMax(myVector);
+    float minElem = findMin(myVector);
+
+    std::cout << "Maximum element: " << maxElem << std::endl;
+    std::cout << "Minimum element: " << minElem << std::endl;
+
+    // Calculate the average of the elements in the vector
+    float average = calculateAverage(myVector);
+
+    std::cout << "Average of elements: " << average << std::endl;
+
+    return 0;
+}
